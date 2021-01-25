@@ -1,0 +1,37 @@
+---
+- name: Play to make use of l
+  hosts: localhost
+  vars: 
+    choices:
+      - Take the blue pill
+      - Take the red pill
+      - Do nothing
+  tasks:
+    - name: Print out contents
+      debug: 
+        msg: "{{ lookup('file', 'files/somefile.txt') }}"
+
+    - name: Print out the contents of two files 
+      debug:
+        msg: "{{ item }}"
+      with_file:
+        - somefile.txt 
+        - someotherfile.txt
+
+   - name: print out the contents of whichever
+     debug:
+       msg: "{{ lookup('file', lookup('first_found', 'files/somefiles.txt','files/someotherfiles.txt', '/etc/hosts')) }}"
+   - name: Execute a command and use the output 
+     debug: 
+       msg: "{{ lookup('lines', 'cat /etc/hosts', 'cat /etc/motd') }}" 
+   - name: Read in a processed Jinja2
+     debug: 
+       msg: "{{ lookup('template', 'j2/sample.j2') }}"
+   - name: Choose a random item 
+     debug: 
+       msg: "{{ item }}"
+     with_random_choice: "{{ choices }}"
+   - name: Grabcontent from a URL 
+     debug: 
+       msg: "{{ lookup('url', 'https://www.w3.org/TR/PNG/iso_8859-1.txt') }}"
+       

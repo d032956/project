@@ -1,0 +1,54 @@
+---
+- name: Play to expermiment eith 
+  hosts:
+    - localhost
+  vars:
+    listvar1:
+      - 1
+      -
+        - 2
+        - 3
+        -
+           - 4
+           - 5
+           - 6
+    listvar2: 
+      - This
+      - list
+      - needs
+      - to be
+      - a sting
+   vars_prompt:
+     - name: userinput
+       prompt: Provide an IP address
+       private: false
+       unsafe: true
+
+   tasks:
+     - name: Use the flatten filter on the list
+       debug:
+         msg: "{{ [1, [2, 3, [4, 5, 6] ] ] | flatten }}"
+     - name: use the intersect filter with lists, 
+         register task output
+       debug: 
+         msg: " {{ listvar1 | flatten }}" 
+       register: flattened
+   
+     - name: use the intersect filter with two lists
+       debug:
+         msg: "{{ flattened['msg'] | intersect([1, 2, 3, 7, 9]) }}"
+          
+     - name: validate the IP address provided
+       debug:
+         msg: "{{ userinput | ipaddr | ternary('The IP provided is valid', 'Invalid IP provided') }}"
+       
+     - name: Take the list in listvar2 and make it 
+       debug: 
+         msg: "{{ listvar2 | join(' ') }}"
+     
+     - name: Take the list in listvar2, shuffle it and make it 
+        string
+       debug:
+         msg: "{{ listvar2 | shuffle | join(' ') }}"
+
+          

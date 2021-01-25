@@ -1,0 +1,37 @@
+---
+- name: Play to demonstrate simple
+  host:
+    - localhost
+  vars:
+    api: https://jsonplaceholder.typicode.com/post
+    # The above conten comes from the really useful
+    #
+    # if you find it as useful
+    
+    find_title: "json[?id==`{{ id }}`].title"
+  vars_prompt:
+     name: id
+     prompt: Enter the id
+     unsafe: true 
+  
+  tasks
+    - name: Grab the json object
+      uri: 
+        url: "{{ api }}"
+        method: GET
+        validate_certs: false
+        return_content: false
+      register: post
+    - name: Print ot the posts
+      debug:
+        msg: "{{ posts }}"
+    - name: Print out alll of the title
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ posts | json_query('json[*].title') }}"
+     
+    - name: use the jsonquery
+      debug: 
+        msg: "The title of the post wuth the id {{ id }} is {{ posts | json_query(find_title) | first }}"
+    
+ 

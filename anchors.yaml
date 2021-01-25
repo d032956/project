@@ -1,0 +1,50 @@
+---
+- name: experiment
+  hosts:
+    - localhost
+  vars:
+    fruits: &types
+      citrus:
+        - orange
+        - grapefruit
+        - lime
+      berries:
+        - strawberry
+        - raspberry
+        - blackberry
+        - blueberry
+      melons:
+        - watermelon
+        - rockmelon
+        - honeydrew
+  tasks:
+    - name: Print
+      debug:
+        var: fruits
+        vars:
+          fruits:
+            <<: *types
+            stone_fruits:
+               - nectarine
+               - apricot
+               - peach
+
+- name: Demonstrate 
+  hosts:
+    - localhost
+  vars:
+    fruits:
+      <<: *types
+  tasks:
+    - name: Print out
+      debug:
+        var: fruits
+      vars:
+        fruits:
+          <<: *types
+          stone_fruits:
+            - nectarine 
+            - apricot
+            - peach
+          melons:
+            - rockmelon

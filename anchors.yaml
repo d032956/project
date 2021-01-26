@@ -21,13 +21,13 @@
     - name: Print
       debug:
         var: fruits
-        vars:
-          fruits:
-            <<: *types
-            stone_fruits:
-               - nectarine
-               - apricot
-               - peach
+      vars:
+        fruits:
+          <<: *types
+          stone_fruits:
+             - nectarine
+             - apricot
+             - peach
 
 - name: Demonstrate 
   hosts:

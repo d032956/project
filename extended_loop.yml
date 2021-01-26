@@ -1,0 +1,18 @@
+---
+- name: demost
+  hosts: localhost
+  tasks:
+    - name: Print out messages
+      debug:
+        msg: | 
+          "The loop pos {{ ansible_loop.index }} is {{ item }}. The loop is o {{ ansible_loop.length }} iitem long. 
+           The name used for the special loop var {{ ansible_loop_var }}. The numer of iterations left {{ ansible_loop.revindex }}"
+      loop:
+        - Apple
+        - Orange
+        - Pear
+        - Kemon
+        - Str
+      loop_control:
+        extended: True
+  

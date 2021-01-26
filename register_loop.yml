@@ -1,0 +1,19 @@
+---
+- name: Register a var
+  hosts: localhost
+  tasks:
+    - name: Run some com.
+      command: "{{ item }}"
+      loop:
+        - echo "Loop Message1 "
+        - echo "Loop Message2 "
+        - echo "Loop Message3 "
+      register: output
+
+    - name: Print out the data
+      debug:
+        msg: "{{ output }}"
+    - name: Print out instances
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ output.results }}"

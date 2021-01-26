@@ -5,6 +5,8 @@
     - Loop item 1
     - Loop item 2
     - Loop item 3
+  loop_control:
+    pause: 3
 
 - name: Print out some other information 
   debug: 

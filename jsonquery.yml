@@ -1,9 +1,9 @@
 ---
 - name: Play to demonstrate simple
-  host:
+  hosts:
     - localhost
   vars:
-    api: https://jsonplaceholder.typicode.com/post
+    api: https://jsonplaceholder.typicode.com/posts
     # The above conten comes from the really useful
     #
     # if you find it as useful
@@ -14,14 +14,14 @@
      prompt: Enter the id
      unsafe: true 
   
-  tasks
+  tasks:
     - name: Grab the json object
       uri: 
         url: "{{ api }}"
         method: GET
         validate_certs: false
         return_content: false
-      register: post
+      register: posts
     - name: Print ot the posts
       debug:
         msg: "{{ posts }}"
@@ -32,6 +32,6 @@
      
     - name: use the jsonquery
       debug: 
-        msg: "The title of the post wuth the id {{ id }} is {{ posts | json_query(find_title) | first }}"
+        msg: "The title of the post with the id {{ id }} is {{ posts | json_query(find_title) | first }}"
     
  

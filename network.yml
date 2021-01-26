@@ -1,0 +1,14 @@
+---
+- name: play to experiment with network modules and devices
+  hosts: network
+  gather_subset: config
+  tasks:
+    - name: Print the device config to confirm that fact gathering is using the correct module
+      debug:
+        msg: "{{ ansible_facts['net_config'] }}"
+    - name: use the ping module to see that it works with network devices 
+      ping:
+        data: "NotPong"
+
+    - name: use the 
+    
